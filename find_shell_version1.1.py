@@ -63,6 +63,8 @@ def find_shell():
         time_3 += 1
         if mod_3 == 0:
             break
-    return min(min(time_1, min(time_2, time_3)), max_time)
+    if min(time_1, min(time_2, time_3)) == max_time:
+        return -1
+    return min(time_1, min(time_2, time_3))
 
 print(find_shell())
