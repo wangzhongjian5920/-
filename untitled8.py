@@ -13,3 +13,28 @@ Created on Mon Sep  3 20:48:28 2018
 输出描述:
 对于每组数据，输出一行，最终的序列。数字之间用空格隔开，不要在行末输出多余的空格。
 """
+def shuffle_once(a):
+    new_array = [0 for _ in range(len(a))]
+    for i in range(len(a)//2):
+        new_array[2 * i] = a[i]
+        new_array[2 * i + 1] = a[i + len(a)//2]
+    return new_array
+
+if __name__ == "__main__":
+    lis = list(map(int, input().strip().split( )))
+    pointer = 0
+    num = lis[0]
+    res = []
+    while pointer != len(lis) - 1:
+        n, k = list(lis[pointer + 1: pointer + 3])
+        pointer += 2
+        arr = lis[pointer + 1: pointer + 1 + 2 * n]
+        pointer += 2 * n
+        for _ in range(k):
+            arr = shuffle_once(arr)
+        for i in arr:
+            res.append(i)
+    print(' '.join(list(map(str, res))))
+        
+    
+
