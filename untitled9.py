@@ -1,32 +1,24 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Sep  3 21:33:22 2018
+Created on Thu Sep  6 22:27:19 2018
 
 @author: Administrator
-"""
+"""    
 
-if __name__ == "__main__":
-    num = int(input())
-    dic = {}
-    location = []
-    right = 0
-    for i in range(num):
-        x_axi, height = map(int, input().strip().split())
-        location.append(x_axi)
-        attachable = [x_axi + 1, x_axi + height - 1]
-        if i == 0:
-            right = x_axi + height - 1
-        else:
-            right = max(right, x_axi + height - 1)
-        dic[x_axi] = attachable
-    dp = [0 for _ in range(right + 1)]
-    for i in sorted(dic.keys())[::-1]:
-        lis = list(range(dic[i][0], dic[i][1] + 1))
-        for j in lis:
-            dp[j] += 1
-            if j in dic.keys():
-                dp[j] += 1
-    for i in dic.keys():
-        left = dic[i][0]
-        right = dic[i][1]
-        print(max(dp[left:right + 1]))
+import networkx as nx
+
+g = nx.DiGraph()
+a = int(input())
+
+for i in range(a + 2):
+    g.add_node(i)
+
+for _ in range(a - 1):
+    s, t = map(int, input().strip().split( ))
+    g.add_edge(s, t, capacity=1)
+g.add_edge(0, 1, capacity=float('inf'))
+for i in range(2, a):
+    g.add_edge(i, a + 1, capacity=float('inf'))
+
+max_flow = nx.algorithms.flow.maxflow.maximum_flow(g, 0, a+1)[0]
+print(2 * max_flow)
