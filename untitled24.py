@@ -4,13 +4,13 @@ Created on Sun Sep 16 12:40:39 2018
 
 @author: Administrator
 """
-
-if __name__ == "__main__":
-    n = int(input())
-    m = list(map(int, list(input())))
-    fin = 0
-    base = n
-    for i in range(len(m))[::-1]:
-        fin += base * m[i]
-        base *= 10
-    print(fin)
+n = int(input())
+dp = [0 for _ in range(n + 1)]
+if n in [1, 2]:
+    print(2)
+else:
+    dp[1] = 2
+    dp[2] = 2
+    for i in range(3, n + 1):
+        dp[i] = dp[i - 2] + dp[i - 1]
+    print(dp[-1])

@@ -1,32 +1,24 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sat Sep  8 22:55:15 2018
+Created on Thu Sep 27 21:56:45 2018
 
 @author: Administrator
 """
-
-tests = int(input())
-res = []
-for _ in range(tests):
-    n, m, string = list(input().strip().split( ))
-    n = int(n)
-    m = int(m)
-    string = list(map(int, list(string)))
-    l_value = string[0]
-    r_value = string[1]
-    left_right = 0
-    for i in range(2, len(string)):
-        r_value *= m
-        r_value += string[i]
-    while(l_value < r_value):
-        left_right += 1
-        value = string[left_right]
-        if ord(str(value)) >= 65:
-            value = ord(str(string(left_right))) - 55
-        l_value *= n
-        l_value += value
-        r_value -= value * (m**(len(string)-1-left_right))
-    if l_value == r_value:
-        res.append(l_value)
-for i in res:
-    print(i)
+string_a = 'baba'
+string_b = 'ababa'
+dp = [0 for _ in range(1 + len(string_a))]
+for i in range(len(string_a)):
+    for j in range(len(string_b)):
+        if string_a[i] == string_b[j]:
+            dp[i+1] = max(max(dp[:i+1]) + 1, dp[i+1])
+        else:
+            dp[i+1] = max(max(dp[:i+1]), dp[i+1])
+print(dp[-1])
+lis = []
+i = 1
+for j in range(len(dp)):
+    if dp[j] == i:
+        i += 1
+        lis.append(string_a[j-1])
+print(''.join(map(str,lis)))
+    
